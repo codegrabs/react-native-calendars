@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 import * as defaultStyle from '../../style';
 
 const STYLESHEET_ID = 'stylesheet.calendar.header';
@@ -11,7 +11,6 @@ export default function(theme={}) {
       justifyContent: 'space-between',
       paddingLeft: 10,
       paddingRight: 10,
-      marginTop: 6,
       alignItems: 'center'
     },
     monthText: {
@@ -19,17 +18,20 @@ export default function(theme={}) {
       fontFamily: appStyle.textMonthFontFamily,
       fontWeight: appStyle.textMonthFontWeight,
       color: appStyle.monthTextColor,
-      margin: 10
+      // margin: 10
     },
     arrow: {
-      padding: 10,
-      ...appStyle.arrowStyle
+      padding: 10
     },
     arrowImage: {
-      tintColor: appStyle.arrowColor
-    },
-    disabledArrowImage: {
-      tintColor: appStyle.disabledArrowColor
+      ...Platform.select({
+        ios: {
+          tintColor: appStyle.arrowColor
+        },
+        android: {
+          tintColor: appStyle.arrowColor
+        }
+      })
     },
     week: {
       marginTop: 7,
@@ -43,7 +45,6 @@ export default function(theme={}) {
       textAlign: 'center',
       fontSize: appStyle.textDayHeaderFontSize,
       fontFamily: appStyle.textDayHeaderFontFamily,
-      fontWeight: appStyle.textDayHeaderFontWeight,
       color: appStyle.textSectionTitleColor
     },
     ...(theme[STYLESHEET_ID] || {})

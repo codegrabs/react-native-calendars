@@ -197,11 +197,10 @@ class WeekCalendar extends Component {
               <Text 
                 allowFontScaling={false} 
                 key={idx} 
+                accessible={false} 
                 style={this.style.dayHeader} 
                 numberOfLines={1} 
-                accessibilityLabel={''}
-                // accessible={false} // not working
-                // importantForAccessibility='no'
+                importantForAccessibility='no'
               >
                 {day}
               </Text>

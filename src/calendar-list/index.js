@@ -284,8 +284,6 @@ class CalendarList extends Component {
           onPressArrowLeft={this.props.onPressArrowLeft}
           onPressArrowRight={this.props.onPressArrowRight}
           testID={STATIC_HEADER}
-          accessibilityElementsHidden={true} // iOS
-          importantForAccessibility={'no-hide-descendants'} // Android
         />
       );
     }
