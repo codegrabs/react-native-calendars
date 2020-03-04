@@ -45,6 +45,12 @@ export default function shouldComponentUpdate(nextProps, nextState) {
       update: true,
       field: 'current'
     };
+  }else if(nextState.showYearPicker !== this.state.showYearPicker){
+    console.log('update showYearPicker: ',this.state.showYearPicker);
+    shouldUpdate = {
+      update: true,
+      field: 'current'
+    };
   }
   return shouldUpdate.update;
 }

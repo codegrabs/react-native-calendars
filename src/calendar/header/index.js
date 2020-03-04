@@ -5,7 +5,20 @@ import XDate from 'xdate';
 import PropTypes from 'prop-types';
 import styleConstructor from './style';
 import { weekDayNames } from '../../dateutils';
-
+const weekDaysNamesSpanish=['Dom','Lun','mar','Mie','Jue','Vie','sábado'];
+const monthNames=[{ id: "01", en: 'January', es:'Enero'}, 
+      { id: "02", en: "February", es:'Febrero'},
+      { id: "03", en: "March", es:'Marzo'},
+      { id: "04", en: "April", es:'Abril'},
+      { id: "05", en: "May", es:'Mayo'},
+      { id: "06", en: "June", es:'Junio'},
+      { id: "07", en: "July", es:'Julio'},
+      { id: "08", en: "August", es:'Agosto'},
+      { id: "09", en: "September", es:'Septiembre'},
+      { id: "10", en: "October", es:'Octubre'},
+      { id: "11", en: "November", es:'Noviembre'},
+      { id: "12", en: "December", es:'Diciembre'},
+  ];
 class CalendarHeader extends Component {
   static propTypes = {
     theme: PropTypes.object,
@@ -27,7 +40,10 @@ class CalendarHeader extends Component {
     this.addMonth = this.addMonth.bind(this);
     this.substractMonth = this.substractMonth.bind(this);
     this.onPressLeft = this.onPressLeft.bind(this);
-    this.onPressRight = this.onPressRight.bind(this);
+    this.onPressRight = this.onPressRight.bind(this);   
+
+     m_tem =  this.props.monthList[(this.props.month.toString('M'))-1];
+    console.log("this.props.monthFormat: ",this.props.month.toString(this.props.monthFormat ? this.props.monthFormat : 'MMMM'));
   }
 
   addMonth() {
@@ -56,6 +72,8 @@ class CalendarHeader extends Component {
 
   onPressLeft() {
     const {onPressArrowLeft} = this.props;
+    console.log("onPressArrowLeft: ",onPressArrowLeft);
+    
     if(typeof onPressArrowLeft === 'function') {
       return onPressArrowLeft(this.substractMonth);
     }
@@ -114,8 +132,12 @@ class CalendarHeader extends Component {
           {leftArrow}
           <TouchableOpacity disabled={!this.props.onPressMonth} onPress={this.props.onPressMonth}>
             <View style={{}}>
-              <Text allowFontScaling={false} style={this.style.monthText} accessibilityTraits='header'>
-                {this.props.month.toString(this.props.monthFormat ? this.props.monthFormat : 'MMMM')}
+            <Text allowFontScaling={false} style={this.style.monthText} accessibilityTraits='header'>
+               {/* {this.props.month.toString(this.props.monthFormat ? this.props.monthFormat : 'MMMM')} */}
+               {/* {this.props.month.toString(this.props.monthFormat ? this.props.monthFormat : 'MMMM')} */}
+
+               {/* {console.log('this.props.month',this.props.month,' m ',this.props.month.toString('M'))} */}
+               {(this.props.monthFormat==undefined && this.props.language=='es') && this.props.month?monthNames[this.props.month.toString('M')-1][this.props.language]:this.props.month.toString(this.props.monthFormat ? this.props.monthFormat : 'MMMM')}
               </Text>
               {indicator}
             </View>
@@ -131,13 +153,21 @@ class CalendarHeader extends Component {
           </TouchableOpacity>
           {rightArrow}
         </View>
-        {
+         {
           !this.props.hideDayNames &&
           <View style={this.style.week}>
             {this.props.weekNumbers && <Text allowFontScaling={false} style={this.style.dayHeader}></Text>}
-            {weekDaysNames.map((day, idx) => (
+            {this.props.language=='es'?weekDaysNamesSpanish.map((day, idx) => (
               <Text allowFontScaling={false} key={idx} accessible={false} style={this.style.dayHeader} numberOfLines={1} importantForAccessibility='no'>{day}</Text>
-            ))}
+            )):weekDaysNames.map((day, idx) => (
+              <Text allowFontScaling={false} key={idx} accessible={false} style={this.style.dayHeader} numberOfLines={1} importantForAccessibility='no'>{day}</Text>
+            ))
+            }
+
+            {/* {weekDaysNames.map((day, idx) => (
+              <Text allowFontScaling={false} key={idx} accessible={false} style={this.style.dayHeader} numberOfLines={1} importantForAccessibility='no'>{day}</Text>
+            ))} */}
+
           </View>
         }
       </View>
